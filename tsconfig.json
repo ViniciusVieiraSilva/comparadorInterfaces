@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "importHelpers": true,
+    // "lib": ["ESNext", "DOM", "ES2019"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+    "noEmitOnError": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.js", "src/main.tsx", "src/main.tsx"],
+  "exclude": ["node_modules"]
+}
