@@ -13,6 +13,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "composite": true
+    //"downlevelIteration": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.js", "src/main.tsx", "src/main.tsx"],
   "exclude": ["node_modules"]

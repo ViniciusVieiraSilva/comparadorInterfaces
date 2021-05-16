@@ -191,50 +191,15 @@
         "signature": "4576b4e61049f5ffd7c9e935cf88832e089265bdb15ffc35077310042cbbbeea",
         "affectsGlobalScope": false
       },
-      "./src/campo.ts": {
-        "version": "6bc12f48ca7a30c8107d366423b3f3c17dca30dd25fa2b75362a875afb5dc577",
-        "signature": "68a6575e2970b8954005c5992fecf4398576037cc9e121a7f29e8d9b3b2ba74a",
-        "affectsGlobalScope": false
-      },
-      "./src/iterator-protocol.ts": {
-        "version": "fb6346a7e4e54c61fabfe0fd1b738f76475f91a2761dd4e8ae43ccf413f0962f",
-        "signature": "c3dcda4007f4f3d89e18ff77070ce989c4dd054060d844199381abf0f39309f3",
-        "affectsGlobalScope": false
-      },
-      "./src/default-iterator.ts": {
-        "version": "83608e0d03cc20d95a53d2a69b051f4220dd41b5c200e6eb86f02f5694e141df",
-        "signature": "9fa2fd8e75cb2d5823c5f09680e56213cc87c3e5833c0a11b1bbf8c27df83455",
-        "affectsGlobalScope": false
-      },
-      "./src/linha.ts": {
-        "version": "22fd580a82931cd216a13080f7c05d64669bca907e283c20b9898da4288a5dbf",
-        "signature": "db6823be8e56d605caf41dbf033cf6bf0f91c71ecfed501212f05429b7a2fb7e",
-        "affectsGlobalScope": false
-      },
-      "./src/data-structure.ts": {
-        "version": "c3e02ae0c58cb822db62bde6e9607ced8d672ee42c4fc1095cb7f1ba8d9b0fd4",
-        "signature": "b49fda1995b6c529928dfb4075d951db811be15560ac5083586ab837dbb21e34",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/fast-deep-equal/index.d.ts": {
-        "version": "37ffe3c12813b6a6d512f7c27b71f3388d03dafa10555ad5094cea393ed3d1f6",
-        "signature": "37ffe3c12813b6a6d512f7c27b71f3388d03dafa10555ad5094cea393ed3d1f6",
+      "./src/line.ts": {
+        "version": "d68cbda703ce143b01fda1ae56e57de74af4a6015a03a68b369c7404c2de4889",
+        "signature": "feaddd6a778e55efb010110e682c3a169576385f39f5bed25b7d8b93d9f3b073",
         "affectsGlobalScope": false
       },
       "./src/main.ts": {
-        "version": "df6235a45ab36a46647744d579a0e1f33310939d3486da47fc4166bf16bf535c",
+        "version": "64aeec07209379c39eeff99bbc0062e891f4cd36b805f19f5f0008ae7caa4c34",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
-      },
-      "./src/tempcoderunnerfile.ts": {
-        "version": "fb1a1af6444190787a8d542509f54b33b264e372e17be8d248e824ba58312d9e",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": true
-      },
-      "./src/teste.ts": {
-        "version": "1e9d81d7e04afbef716f73636e55644c150a6fea3ae351443016eb9a490b9af6",
-        "signature": "b4469e65884061eab37399a9dfc0ba59d2c1d92fa275f9fdcf7df2fad3621da1",
-        "affectsGlobalScope": true
       },
       "./node_modules/@types/json-schema/index.d.ts": {
         "version": "3a1e165b22a1cb8df82c44c9a09502fd2b33f160cd277de2cd3a055d8e5c6b27",
@@ -716,36 +681,13 @@
         "./node_modules/@types/node/stream.d.ts",
         "./node_modules/@types/node/zlib.d.ts"
       ],
-      "./src/campo.ts": [
+      "./src/line.ts": [
         "./node_modules/tslib/tslib.d.ts"
-      ],
-      "./src/data-structure.ts": [
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/campo.ts",
-        "./src/default-iterator.ts",
-        "./src/iterator-protocol.ts",
-        "./src/linha.ts"
-      ],
-      "./src/default-iterator.ts": [
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/campo.ts",
-        "./src/data-structure.ts",
-        "./src/iterator-protocol.ts"
-      ],
-      "./src/iterator-protocol.ts": [
-        "./node_modules/tslib/tslib.d.ts"
-      ],
-      "./src/linha.ts": [
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/campo.ts"
       ],
       "./src/main.ts": [
         "./node_modules/@types/node/fs.d.ts",
-        "./node_modules/@types/node/v8.d.ts",
-        "./node_modules/fast-deep-equal/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
-        "./src/campo.ts",
-        "./src/data-structure.ts"
+        "./src/line.ts"
       ]
     },
     "exportedModulesMap": {
@@ -976,19 +918,6 @@
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts",
         "./node_modules/@types/node/zlib.d.ts"
-      ],
-      "./src/data-structure.ts": [
-        "./src/campo.ts",
-        "./src/iterator-protocol.ts",
-        "./src/linha.ts"
-      ],
-      "./src/default-iterator.ts": [
-        "./src/campo.ts",
-        "./src/data-structure.ts",
-        "./src/iterator-protocol.ts"
-      ],
-      "./src/linha.ts": [
-        "./src/campo.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -1039,7 +968,6 @@
       "./node_modules/@types/node/wasi.d.ts",
       "./node_modules/@types/node/worker_threads.d.ts",
       "./node_modules/@types/node/zlib.d.ts",
-      "./node_modules/fast-deep-equal/index.d.ts",
       "./node_modules/tslib/tslib.d.ts",
       "./node_modules/typescript/lib/lib.dom.d.ts",
       "./node_modules/typescript/lib/lib.dom.iterable.d.ts",
@@ -1078,256 +1006,8 @@
       "./node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "./node_modules/typescript/lib/lib.scripthost.d.ts",
       "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
-      "./src/campo.ts",
-      "./src/data-structure.ts",
-      "./src/default-iterator.ts",
-      "./src/iterator-protocol.ts",
-      "./src/linha.ts",
-      "./src/main.ts",
-      [
-        "./src/tempcoderunnerfile.ts",
-        [
-          {
-            "file": "./src/tempcoderunnerfile.ts",
-            "start": 16,
-            "length": 1,
-            "messageText": "Cannot find name 'a'.",
-            "category": 1,
-            "code": 2304
-          }
-        ]
-      ],
-      "./src/teste.ts"
-    ],
-    "affectedFilesPendingEmit": [
-      [
-        "./node_modules/@types/json-schema/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/assert.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/async_hooks.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/base.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/buffer.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/child_process.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/cluster.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/console.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/constants.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/crypto.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/dgram.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/dns.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/domain.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/events.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/fs.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/fs/promises.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/globals.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/globals.global.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/http.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/http2.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/https.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/inspector.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/module.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/net.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/os.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/path.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/perf_hooks.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/process.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/punycode.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/querystring.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/readline.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/repl.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/stream.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/string_decoder.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/timers.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/tls.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/trace_events.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/ts3.6/base.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/tty.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/url.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/util.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/v8.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/vm.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/wasi.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/worker_threads.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/zlib.d.ts",
-        1
-      ],
-      [
-        "./node_modules/fast-deep-equal/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/tslib/tslib.d.ts",
-        1
-      ],
-      [
-        "./src/campo.ts",
-        1
-      ],
-      [
-        "./src/data-structure.ts",
-        1
-      ],
-      [
-        "./src/default-iterator.ts",
-        1
-      ],
-      [
-        "./src/iterator-protocol.ts",
-        1
-      ],
-      [
-        "./src/linha.ts",
-        1
-      ],
-      [
-        "./src/main.ts",
-        1
-      ],
-      [
-        "./src/tempcoderunnerfile.ts",
-        1
-      ],
-      [
-        "./src/teste.ts",
-        1
-      ]
+      "./src/line.ts",
+      "./src/main.ts"
     ]
   },
   "version": "4.2.4"

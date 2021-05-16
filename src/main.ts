@@ -1,9 +1,8 @@
-import { cachedDataVersionTag } from 'node:v8';
-import { Campo } from './campo';
-import { DataStructure } from './data-structure';
+import { Line } from './line';
 import fs from 'fs';
-import equal from 'fast-deep-equal';
 
+const CPUs = require('os').cpus().length;
+//console.log(CPUs);
 const files: string[] = [];
 
 process.argv.forEach((file) => {
@@ -16,24 +15,17 @@ function loadInterfaceDefinition() {
   return contentJson;
 }
 
-function countFileLines(file: string): number {
-  var nLines = 0;
-  for (var i = 0, n = file.length; i < n; ++i) {
-    if (file[i] === '\n') {
-      ++nLines;
-    }
-  }
-  return nLines;
-}
+const jsonInterface = loadInterfaceDefinition();
 
 function getRegisterTypes() {
-  const jsonInterface = loadInterfaceDefinition();
   const registerTypes: string[] = [];
   jsonInterface.tpregs.forEach((register: any) =>
     registerTypes.push(register.tpreg),
   );
   return registerTypes;
 }
+
+const registerTypes: string[] = getRegisterTypes();
 
 function getRegistersKeys(registerType: string) {
   const jsonInterface = loadInterfaceDefinition();
@@ -81,14 +73,12 @@ function getRegisterFieldName(tpreg: string, ini: number, tam: number): string {
   return fieldName;
 }
 
-function readFile(fileName: string) {
-  const registerTypes: string[] = getRegisterTypes();
+function parseFile(fileName: string) {
   const fileBuffer = fileName;
-  const lines: string[] = fileBuffer.split('\n');
-  const dataStructureKeys: DataStructure[] = [];
-  const dataStructureFields = new DataStructure();
+  const rawLines: string[] = fileBuffer.split('\n');
+  const lines: Map<string, Line> = new Map();
 
-  lines.forEach((line: string) => {
+  rawLines.forEach((line: string) => {
     registerTypes.forEach((registerType) => {
       const registerIndexes: string[][] = getRegistersIndexes(registerType);
       registerIndexes.forEach((registerIndex: any[]) => {
@@ -97,152 +87,152 @@ function readFile(fileName: string) {
             registerIndex.value ===
             sliceLine(line, registerIndex.ini, registerIndex.tam)
           ) {
+            let id = registerType;
             const registerKeys: string[][] = getRegistersKeys(registerType);
+            const fields: Map<string, string> = new Map();
             registerKeys.forEach((registerKey: any[]) => {
-              const dataStructureKey = new DataStructure();
               registerKey.forEach((registerKey: any) => {
-                const rKEY = {
-                  CAMPO: getRegisterFieldName(
-                    registerType,
-                    registerKey.ini,
-                    registerKey.tam,
-                  ),
-                  VALOR: sliceLine(line, registerKey.ini, registerKey.tam),
-                };
-                dataStructureKey.addItem(registerType, rKEY);
+                const field = getRegisterFieldName(
+                  registerType,
+                  registerKey.ini,
+                  registerKey.tam,
+                );
+                const value = sliceLine(line, registerKey.ini, registerKey.tam);
+                fields.set(field, value);
+                id = id + '|' + value;
               });
-              dataStructureKeys.push(dataStructureKey);
-              dataStructureKey.resetIterator();
             });
-            //dataStructureKeys.push(dataStructureKey);
             const registerFields: string[][] = getRegistersFields(registerType);
             registerFields.forEach((registerField: any[]) => {
               registerField.forEach((registerField: any) => {
-                const rField = {
-                  CAMPO: registerField.column,
-                  VALOR: sliceLine(line, registerField.ini, registerField.tam),
-                };
-                dataStructureFields.addItem(registerType, rField);
+                const field = getRegisterFieldName(
+                  registerType,
+                  registerField.ini,
+                  registerField.tam,
+                );
+                const value = sliceLine(
+                  line,
+                  registerField.ini,
+                  registerField.tam,
+                );
+                fields.set(field, value);
               });
             });
-            //console.log(dataStructureKeys);
+            lines.set(id, { fields, registerType });
+            //console.log(lines.size, id);
           }
         });
       });
     });
   });
-  return { dataStructureKeys, dataStructureFields };
+  return lines;
 }
 
-// function compareFileSize(fileLenghtORI: number, fileLenghtVER: number) {
-//   const qtdLinesORI: number = countFileLines(
-//     fs.readFileSync(files[3], 'utf-8'),
-//   );
-//   const qtdLinesVER: number = countFileLines(
-//     fs.readFileSync(files[4], 'utf-8'),
-//   );
-//   if (fileLenghtORI != fileLenghtVER) {
-//     console.log(
-//       'Arquivos com tamanhos diferentes:\n',
-//       'Arquivo ORI: ',
-//       qtdLinesORI,
-//       ' linhas, ',
-//       fileLenghtORI,
-//       ' campos\n',
-//       qtdLinesVER,
-//       ' linhas, ',
-//       'Arquivo VER: ',
-//       fileLenghtVER,
-//       ' campos',
-//     );
-//   } else
-//     console.log(
-//       'Arquivos com mesmo tamanho:\n',
-//       'Arquivo ORI: ',
-//       qtdLinesORI,
-//       ' linhas, ',
-//       fileLenghtORI,
-//       ' campos\n',
-//       'Arquivo VER: ',
-//       qtdLinesVER,
-//       ' linhas, ',
-//       fileLenghtVER,
-//       ' campos',
-//     );
-// }
-const registerTypes = getRegisterTypes();
+function compareFilesSizes(registerType: string) {
+  // Retorna a quantidade de linhas por tipo de registro
 
-function compareFileSizeByKeys(
-  dataStructureKeysORI: DataStructure[],
-  dataStructureKeysVER: DataStructure[],
+  let originalFileSize = 0;
+  let versionFileSize = 0;
+  console.log('Registro tipo: ', registerType);
+  original.forEach((line) => {
+    if (line.registerType === registerType) {
+      originalFileSize++;
+    }
+  });
+  version.forEach((line) => {
+    if (line.registerType === registerType) {
+      versionFileSize++;
+    }
+  });
+  console.log('Quantidade de registros ORI: ', originalFileSize);
+  console.log('Quantidade de registros VER: ', versionFileSize);
+}
+
+function getUniqueLines(
+  registerType: string,
+  originalKeys: IterableIterator<string>,
+  versionKeys: IterableIterator<string>,
 ) {
-  console.log('Total de registros ORI: ', dataStructureKeysORI.length);
-  console.log('Total de registros VER: ', dataStructureKeysVER.length);
+  // Retorna as linhas que estão apenas no arquivo original ou no version.
 
-  registerTypes.forEach((regType) => {
-    let qtdORI: number = 0;
-    let qtdVER: number = 0;
-    console.log('Registro tipo: ', regType);
-    dataStructureKeysORI.forEach((keyORI) => {
-      if (regType == keyORI.linhas.REGISTRO) {
-        qtdORI++;
+  for (let key of originalKeys) {
+    let valueOnVersion = version.get(key);
+    let valueOnOriginal = original.get(key);
+    if (valueOnOriginal?.registerType == registerType) {
+      if (valueOnVersion == null) {
+        console.log('Registros apenas no arquivo ORI:');
+        console.log(key);
       }
-    });
-    console.log('Quantidade de registros ORI: ', qtdORI);
-    dataStructureKeysVER.forEach((keyVER) => {
-      if (regType == keyVER.linhas.REGISTRO) {
-        qtdVER++;
+    }
+  }
+  for (const key of versionKeys) {
+    let valueOnVersion = version.get(key);
+    let valueOnOriginal = original.get(key);
+    if (valueOnVersion?.registerType == registerType) {
+      if (valueOnOriginal == null) {
+        console.log('Registros apenas no arquivo VER:');
+        console.log(key);
       }
-    });
-    console.log('Quantidade de registros VER: ', qtdVER);
-  });
-
-  console.table(dataStructureKeysORI);
-  const onlyORI = dataStructureKeysORI.forEach((keyORI) => {
-    //console.log(keyORI.linhas.REGISTRO);
-    //console.log(keyORI.linhas.CAMPOS);
-    // keyORI.linhas.CAMPOS.filter(({ CAMPO: campoORI, VALOR: valorORI }) =>
-    //   dataStructureKeysVER.forEach((keyVER) => {
-    //     !keyVER.linhas.CAMPOS.some(
-    //       ({ CAMPO: campoVER, VALOR: valorVER }) =>
-    //         campoORI === campoVER && valorORI === valorVER,
-    //     );
-    //   }),
-    // );
-  });
-
-  //console.table(onlyORI);
-
-  // const onlyVER = dataStructureKeysVER.linhas.filter(
-  //   ({ CAMPO: campoVER, VALOR: valorVER, REGISTRO: registroVER }) =>
-  //     fileDataStructuresVER[0].linhas.some(
-  //       ({ CAMPO: campoORI, VALOR: valorORI, REGISTRO: registroORI }) =>
-  //         campoVER === campoORI &&
-  //         valorVER === valorORI &&
-  //         registroVER === registroORI,
-  //     ),
-  // );
+    }
+  }
 }
 
-function compareFiles() {
-  const fileORI = readFile(fs.readFileSync(files[3], 'utf-8'));
-  const fileVER = readFile(fs.readFileSync(files[4], 'utf-8'));
-
-  const dataStructureKeysORI = fileORI.dataStructureKeys;
-  const dataStructureFieldsORI = fileORI.dataStructureFields;
-
-  const dataStructureKeysVER = fileVER.dataStructureKeys;
-  const dataStructureFieldsVER = fileVER.dataStructureFields;
-
-  compareFileSizeByKeys(dataStructureKeysORI, dataStructureKeysVER);
-
-  // fileDataStructuresORI[0].linhas.forEach((linha) => {
-  //   console.log(linha);
-  // });
-  //console.log('Registros apenas no arquivo ORI:');
-  //console.table(onlyORI);
-  //console.log('Registros apenas no arquivo VER:');
-  //console.table(onlyVER);
+function compareNotUniqueLines(
+  registerType: string,
+  originalKeys: IterableIterator<string>,
+) {
+  for (let key of originalKeys) {
+    let valueOnVersion = version.get(key);
+    let valueOnOriginal = original.get(key);
+    if (valueOnOriginal?.registerType == registerType) {
+      if (valueOnOriginal != null && valueOnVersion != null) {
+        const differences = compareFields(valueOnOriginal, valueOnVersion);
+        differences.forEach((difference) => {
+          const result = {
+            REGISTRO: valueOnOriginal?.registerType,
+            CAMPO: difference.key,
+            'VALOR ORI': difference.valueField1,
+            'VALOR VER': difference.valueField2,
+          };
+          console.log(result);
+        });
+      }
+    }
+  }
 }
 
-compareFiles();
+function compareFields(field1: Line, field2: Line) {
+  const field1Keys = field1.fields.keys();
+  const differences = [];
+
+  for (const key of field1Keys) {
+    const valueField1 = field1.fields.get(key);
+    const valueField2 = field2.fields.get(key);
+    if (valueField2 == null) {
+      console.log('Campo não encontrado no arquivo VER');
+      console.log(key, ':', valueField1);
+    } else if (valueField1 != valueField2) {
+      differences.push({ key, valueField1, valueField2 });
+    }
+  }
+  return differences;
+}
+
+console.time('Reading');
+const fileOriginal = fs.readFileSync(files[3], 'utf-8');
+const fileVersion = fs.readFileSync(files[4], 'utf-8');
+console.timeEnd('Reading');
+
+console.time('Parsing');
+const original = parseFile(fileOriginal);
+const version = parseFile(fileVersion);
+console.timeEnd('Parsing');
+
+console.time('Comparing');
+registerTypes.forEach((registerType) => {
+  compareFilesSizes(registerType);
+  getUniqueLines(registerType, original.keys(), version.keys());
+  console.log('Diferenças');
+  compareNotUniqueLines(registerType, original.keys());
+});
+console.timeEnd('Comparing');
